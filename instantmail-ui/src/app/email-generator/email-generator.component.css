@@ -1,0 +1,36 @@
+h1 {
+    font-family: 'Arial', sans-serif; /* Altere para a fonte desejada */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    background-color: #f8f9fa; /* Cor de fundo do rodapé */
+    color: #6c757d; /* Cor do texto do rodapé */
+}
+.gradient-text {
+  background: linear-gradient(135deg, #4285F4, #5332e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: background-color 0.8s ease;
+}
+.gradient-text:hover {
+  background: linear-gradient(135deg,#5332e9, #4285F4 );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.dark-blue {
+  background-color: #111827
+}
+.text-blue-600 {
+  color: #4285F4
+
+}
+.bg-blue-600 {
+  transition: background-color 0.3s ease;
+  background-color: #4285F4
+}
+.bg-blue-600:hover
+{
+  background-color: #3470d1
+}
