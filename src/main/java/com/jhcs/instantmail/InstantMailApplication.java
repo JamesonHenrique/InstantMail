@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InstantmailApplication {
+public class   InstantMailApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(InstantmailApplication.class, args);
+		SpringApplication.run(InstantMailApplication.class, args);
 	}
 
 }
