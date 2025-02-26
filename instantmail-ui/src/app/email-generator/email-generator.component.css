@@ -1,3 +1,11 @@
+:root {
+  --primary: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #60a5fa;
+  --secondary: #4f46e5;
+  --accent: #8b5cf6;
+}
+
 h1 {
     font-family: 'Arial', sans-serif; /* Altere para a fonte desejada */
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
@@ -8,13 +16,13 @@ footer {
     color: #6c757d; /* Cor do texto do rodapé */
 }
 .gradient-text {
-  background: linear-gradient(135deg, #4285F4, #5332e9);
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: background-color 0.8s ease;
 }
 .gradient-text:hover {
-  background: linear-gradient(135deg,#5332e9, #4285F4 );
+  background: linear-gradient(135deg,#3272e9, #4429a5 );
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -22,15 +30,158 @@ footer {
 .dark-blue {
   background-color: #111827
 }
-.text-blue-600 {
-  color: #4285F4
 
-}
 .bg-blue-600 {
   transition: background-color 0.3s ease;
-  background-color: #4285F4
+  background-color: #6842f4
 }
 .bg-blue-600:hover
 {
-  background-color: #3470d1
+  background-color: #4429a5
+}
+body {
+  font-family: 'Lato', sans-serif;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cinzel', serif;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
+  border-radius: 0.5rem;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-secondary {
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.select2-container--classic .select2-selection--single {
+  border-color: #e5e7eb !important;
+  border-radius: 0.5rem !important;
+  height: 42px !important;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__rendered {
+  line-height: 42px !important;
+  padding-left: 15px !important;
+}
+
+.select2-container--classic .select2-selection--single .select2-selection__arrow {
+  height: 40px !important;
+}
+
+.feature-icon {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+.pricing-card {
+  transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+}
+
+.team-card img {
+  transition: all 0.5s ease;
+}
+
+.team-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
+}
+
+/* Animated underline for nav links */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background: linear-gradient(135deg, #3b82f6, #4f46e5);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }

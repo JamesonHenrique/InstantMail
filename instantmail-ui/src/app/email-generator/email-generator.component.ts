@@ -12,8 +12,7 @@ import { HttpClient } from '@angular/common/http';
 interface EmailForm {
   originalEmail: string;
   tone: string;
-  includeGreeting: boolean;
-  includeSignature: boolean;
+
 }
 
 @Component({
@@ -45,8 +44,7 @@ export class EmailGeneratorComponent {
     this.emailForm = this.fb.group({
       originalEmail: [''],
       tone: [''],
-      includeGreeting: [false],
-      includeSignature: [false],
+     
     });
   }
 
