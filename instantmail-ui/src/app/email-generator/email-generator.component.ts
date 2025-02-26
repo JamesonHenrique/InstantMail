@@ -35,7 +35,6 @@ export class EmailGeneratorComponent {
   toneOptions = [
     { value: 'professional', label: 'Professional' },
     { value: 'friendly', label: 'Friendly' },
-    { value: 'formal', label: 'Formal' },
     { value: 'casual', label: 'Casual' },
     { value: 'urgent', label: 'Urgent' },
   ];
@@ -44,7 +43,7 @@ export class EmailGeneratorComponent {
     this.emailForm = this.fb.group({
       originalEmail: [''],
       tone: [''],
-     
+
     });
   }
 
