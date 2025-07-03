@@ -20,4 +20,5 @@ public class EmailRequest {
      * Pode ser, por exemplo, formal, informal, amigável, etc.
      */
     private String tone;
+    private String signature;
 }

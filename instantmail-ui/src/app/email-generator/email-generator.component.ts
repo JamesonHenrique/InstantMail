@@ -5,14 +5,15 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { catchError, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { EmailGeneratorService } from '../services/email-generator.service';
 
 interface EmailForm {
   originalEmail: string;
   tone: string;
-
+  signature: string;
 }
 
 @Component({
@@ -33,17 +34,17 @@ export class EmailGeneratorComponent {
   isCopied = false;
   error = '';
   toneOptions = [
-    { value: 'professional', label: 'Professional' },
-    { value: 'friendly', label: 'Friendly' },
+    { value: 'professional', label: 'Profissional' },
+    { value: 'friendly', label: 'Amigável' },
     { value: 'casual', label: 'Casual' },
-    { value: 'urgent', label: 'Urgent' },
+    { value: 'urgent', label: 'Urgente' },
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private emailGeneratorService: EmailGeneratorService) {
     this.emailForm = this.fb.group({
-      originalEmail: [''],
+      originalEmail: ['', [Validators.required, Validators.minLength(5)]],
       tone: [''],
-
+      signature: [''],
     });
   }
 
@@ -55,7 +56,7 @@ export class EmailGeneratorComponent {
         this.isCopied = false;
       }, 2000);
     } catch (err) {
-      console.error('Failed to copy text: ', err);
+      console.error('Falha ao copiar texto: ', err);
     }
   }
 
@@ -69,20 +70,10 @@ export class EmailGeneratorComponent {
 
     const formData = this.emailForm.value;
 
-    this.http
-      .post(
-        'http://localhost:8080/api/email/generate',
-        {
-          emailContent: formData.originalEmail,
-          tone: formData.tone,
-          includeGreeting: formData.includeGreeting,
-          includeSignature: formData.includeSignature,
-        },
-        { responseType: 'text' }
-      )
+    this.emailGeneratorService.generateEmail(formData.originalEmail, formData.tone, formData.signature)
       .pipe(
         catchError((error) => {
-          this.error = 'Failed to generate email reply. Please try again.';
+          this.error = 'Falha ao gerar resposta. Tente novamente.';
           console.error(error);
           return of(null);
         })
@@ -96,3 +87,5 @@ export class EmailGeneratorComponent {
       });
   }
 }
+
+

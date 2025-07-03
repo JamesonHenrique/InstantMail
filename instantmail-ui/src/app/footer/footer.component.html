@@ -1,0 +1,67 @@
+<footer class="bg-gray-900 dark-blue text-gray-300">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="col-span-1 md:col-span-2">
+              <div class="flex items-center space-x-2 mb-4">
+                <div class="flex items-center space-x-2 mb-4">
+                  <i class="fa-solid fa-envelope-open-text text-blue-500 text-2xl"></i>
+                  <span class="text-xl font-bold text-white font-cinzel">InstantMail</span>
+              </div>
+              </div>
+              <p class="text-gray-400 mb-4">
+                  Respostas profissionais de email em segundos. Economize tempo e mantenha a consistência em suas comunicações.
+              </p>
+          </div>
+
+          <div>
+              <h3 class="text-white font-semibold mb-4">Links Rápidos</h3>
+              <ul class="space-y-2">
+                  <li><a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-chevron-right text-xs mr-2 text-blue-500"></i>Início</a></li>
+                  <li><a href="#features" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-chevron-right text-xs mr-2 text-blue-500"></i>Recursos</a></li>
+
+                  <li><a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-solid fa-chevron-right text-xs mr-2 text-blue-500"></i>Sobre</a></li>
+              </ul>
+          </div>
+
+
+          <div>
+            <div>
+              <h3 class="text-white font-semibold mb-4 font-cinzel">Contatos</h3>
+              <ul class="space-y-3">
+                  <li (click)="goToLink(links[2])" class="flex items-start">
+                      <i class="fa-solid fa-envelope text-blue-500 mr-2 mt-1 flex-shrink-0"></i>
+                      <span class="break-all hover:text-blue-400 transition-colors underline cursor-pointer">jamesonhenrique14&#64;gmail.com</span>
+                  </li>
+                  <li (click)="goToLink(links[0])" class="flex items-start">
+                      <i class="fa-brands fa-linkedin text-blue-500 mr-2 mt-1 flex-shrink-0"></i>
+                      <a href="https://www.linkedin.com/in/jamesonhenrique/"
+                         class="break-all hover:text-blue-400 transition-colors underline"
+                         target="_blank"
+                         rel="noopener noreferrer">
+                          linkedin.com/in/jamesonhenrique
+                      </a>
+                  </li>
+                  <li (click)="goToLink(links[1])" class="flex items-start">
+                      <i class="fa-brands fa-github text-blue-500 mr-2 mt-1 flex-shrink-0"></i>
+                      <a href="https://github.com/JamesonHenrique"
+                         class="break-all hover:text-blue-400 transition-colors underline"
+                         target="_blank"
+                         rel="noopener noreferrer">
+                          github.com/JamesonHenrique
+                      </a>
+                  </li>
+              </ul>
+            </div>
+          </div>
+      </div>
+
+      <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p>&copy; 2025 InstantMail. Todos os direitos reservados.</p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+              <a routerLink="/" (click)="scrollTo('')" class="hover:text-blue-400 transition-colors">Política de Privacidade</a>
+              <a routerLink="/" (click)="scrollTo('')" class="hover:text-blue-400 transition-colors">Termos de Serviço</a>
+              <a routerLink="/" (click)="scrollTo('')" class="hover:text-blue-400 transition-colors">Política de Cookies</a>
+          </div>
+      </div>
+  </div>
+</footer>

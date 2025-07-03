@@ -1,0 +1,81 @@
+<header
+  id="header"
+  class="bg-white border-b border-gray-200 fixed w-full top-0 z-50 shadow-sm"
+>
+  <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <a routerLink="/" class="flex items-center space-x-2">
+          <i class="fa-solid fa-envelope-open-text text-2xl text-blue-600"></i>
+          <span class="text-xl font-bold gradient-text">InstantEmail</span>
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          routerLink="/features"
+          (click)="scrollTo('features')"
+          class="text-gray-600 hover:text-blue-600 transition-colors nav-link"
+          >Recursos</a
+        >
+
+        <a
+          routerLink="/about"
+          (click)="scrollTo('about')"
+          class="text-gray-600 hover:text-blue-600 transition-colors nav-link"
+          >Sobre</a
+        >
+        <a routerLink="/emailGenerator" (click)="scrollTo('emailGenerator')">
+          <button
+            class="btn-primary text-white px-5 py-2 rounded-lg flex items-center space-x-2"
+          >
+            <span>Comece Agora</span>
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+          </button>
+        </a>
+      </div>
+      <div class="md:hidden">
+        <button
+          (click)="toggleMobileMenu()"
+          class="text-gray-600 hover:text-blue-600 transition-colors"
+          aria-label="Toggle menu"
+        >
+          <i class="fa-solid fa-bars text-xl" *ngIf="!isMobileMenuOpen"></i>
+          <i class="fa-solid fa-times text-xl" *ngIf="isMobileMenuOpen"></i>
+        </button>
+      </div>
+    </div>
+    <div
+      id="mobileMenu"
+      class="md:hidden bg-white border-t border-gray-200"
+      *ngIf="isMobileMenuOpen"
+    >
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a
+          routerLink="/features"
+          (click)="scrollTo('features')"
+          class="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+          (click)="toggleMobileMenu()"
+        >
+          <i class="fa-solid fa-star mr-2 text-blue-500"></i>Recursos
+        </a>
+        <a
+          routerLink="/about"
+          (click)="scrollTo('about')"
+          class="block px-3 py-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+          (click)="toggleMobileMenu()"
+        >
+          <i class="fa-solid fa-info-circle mr-2 text-blue-500"></i>Sobre
+        </a>
+        <a routerLink="/emailGenerator" (click)="scrollTo('emailGenerator')" (click)="toggleMobileMenu()">
+          <button
+            class="btn-primary w-full text-white px-4 py-2 rounded-lg flex items-center justify-center space-x-2"
+          >
+            <span>Comece Agora</span>
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+          </button>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
