@@ -1,9 +1,9 @@
-name: Deploy Notes Backend
+name: Deploy InstantMail Backend
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:

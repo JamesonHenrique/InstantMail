@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/email")
 @AllArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin("https://instantmail-ai.vercel.app/")
 public class EmailGeneratorController {
 
     private final EmailGeneratorService emailGeneratorService;
