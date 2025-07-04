@@ -5,7 +5,7 @@
   "description": "Gere respostas profissionais de email em segundos",
 
   "permissions": ["activeTab", "storage"],
-  "host_permissions": ["http://localhost:8080/*", "*://mail.google.com/*"],
+  "host_permissions": ["https://instantmail.shop/*", "*://mail.google.com/*"],
   "content_scripts": [
     {
       "js": ["content.js"],
@@ -22,6 +22,6 @@
   ],
   "action": {
     "default_title": "InstantMail",
-    "default_icon": "icon_png.PNG"
+    "default_icon": "icon.png"
   }
 }

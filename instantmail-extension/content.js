@@ -92,7 +92,7 @@ function injectButton() {
 
             const emailContent = getEmailContent();
              const selectedTone = toneSelector.value; // O
-            const response = await fetch('http://localhost:8080/api/email/generate', {
+            const response = await fetch('https://instantmail.shop/api/email/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
