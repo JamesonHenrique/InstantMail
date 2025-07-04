@@ -1,10 +1,8 @@
 package com.jhcs.instantmail.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jhcs.instantmail.dto.EmailRequest;
 import com.jhcs.instantmail.service.EmailGeneratorService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/email")
 @AllArgsConstructor
-@CrossOrigin("https://instantmail-ai.vercel.app")
+@CrossOrigin(origins = "https://www.instantmail.shop")
 public class EmailGeneratorController {
 
     private final EmailGeneratorService emailGeneratorService;
