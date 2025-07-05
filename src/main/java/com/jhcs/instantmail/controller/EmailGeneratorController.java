@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/email")
 @AllArgsConstructor
-@CrossOrigin(origins = "https://www.instantmail.shop")
+@CrossOrigin(origins = {
+        "https://www.instantmail.shop",
+        "chrome-extension://*"
+})
 public class EmailGeneratorController {
 
     private final EmailGeneratorService emailGeneratorService;
