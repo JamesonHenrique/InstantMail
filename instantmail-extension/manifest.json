@@ -4,24 +4,38 @@
   "version": "1.0.0",
   "description": "Gere respostas profissionais de email em segundos",
 
-  "permissions": ["activeTab", "storage"],
-  "host_permissions": ["https://instantmail.shop/*", "*://mail.google.com/*"],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://instantmail.shop/*",
+    "*://mail.google.com/*"
+  ],
   "content_scripts": [
     {
       "js": ["content.js"],
       "matches": ["*://mail.google.com/*"],
       "css": ["content.css"],
-      "run_at": "document_end"
+      "run_at": "document_end",
+      "all_frames": true
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["icons/*"],
+      "resources": [
+        "icons/*",
+        "content.css"
+      ],
       "matches": ["*://mail.google.com/*"]
     }
   ],
   "action": {
     "default_title": "InstantMail",
     "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
   }
 }
