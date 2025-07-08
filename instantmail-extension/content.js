@@ -1,264 +1,276 @@
-const CONFIG = {
-  API_ENDPOINT: 'https://instantmail.shop/api/email/generate',
-  BUTTON_TEXT: {
-    DEFAULT: 'Resposta de IA',
-    LOADING: 'Gerando...',
-    ERROR: 'Erro! Tentar novamente'
-  },
-  TONES: [
-    { value: 'professional', label: 'Profissional' },
-    { value: 'friendly', label: 'Amigável' },
-    { value: 'urgent', label: 'Urgente' },
-    { value: 'casual', label: 'Casual' }
-  ],
-  STYLES: {
-    BUTTON: {
-      marginRight: '8px',
-      borderRadius: '18px',
-      backgroundColor: '#0B57D0',
-      color: 'white',
-      padding: '0 16px',
-      height: '36px',
-      minWidth: '120px'
-    },
-    SELECT: {
-      marginRight: '8px',
-      padding: '7px',
-      borderRadius: '18px',
-      border: '1px solid white',
-      backgroundColor: '#0B57D0',
-      color: 'white',
-      fontSize: '15px',
-      height: '36px'
-    }
-  },
-  SELECTORS: {
-    EMAIL_CONTENT: ['.h7', '.a3s.aiL', '.gmail_quote', '[role="presentation"]'],
-    COMPOSE_TOOLBAR: ['.btC', '.aDh', '[role="toolbar"]', '.gU.Up'],
-    COMPOSE_BOX: '[role="textbox"][g_editable="true"]'
-  }
-};
+console.log("InstantMail - Script de Conteúdo Carregado");
 
-class DOMUtils {
-  static createElement(tag, attributes = {}, styles = {}) {
-    const element = document.createElement(tag);
-    Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
-    Object.assign(element.style, styles);
-    return element;
-  }
+function createAIButton() {
+    const button = document.createElement('div');
+    button.className = 'T-I J-J5-Ji aoO v7 T-I-atl L3 ai-reply-button';
+    button.style.marginRight = '8px';
+    button.innerHTML = 'Resposta de IA';
+    button.style.borderRadius = '18px';
+    button.style.backgroundColor = '#0B57D0';
+    button.style.color = 'white';
+    button.style.padding = '0 16px';
+    button.style.cursor = 'pointer';
+    button.style.display = 'inline-flex';
+    button.style.alignItems = 'center';
+    button.style.justifyContent = 'center';
+    button.style.height = '36px';
 
-  static findFirstElement(selectors, parent = document) {
-    for (const selector of selectors) {
-      const element = parent.querySelector(selector);
-      if (element) return element;
-    }
-    return null;
-  }
+    button.setAttribute('role', 'button');
+    button.setAttribute('data-tooltip', 'InstantMail - Gerar Resposta de IA');
+    return button;
 }
 
-class AIComponents {
-  static createAIButton() {
-    const button = DOMUtils.createElement('div', {
-      'class': 'T-I J-J5-Ji aoO v7 T-I-atl L3 ai-reply-button',
-      'role': 'button',
-      'data-tooltip': 'InstantMail - Gerar Resposta de IA',
-      'aria-label': 'Gerar resposta com IA'
-    }, CONFIG.STYLES.BUTTON);
+function createToneSelector() {
+    const select = document.createElement('select');
+    select.className = 'tone-selector';
+    select.style.marginRight = '8px';
+    select.style.padding = '7px';
+    select.style.borderRadius = '18px';
+    select.style.border = '1px solid white';
+    select.style.backgroundColor = '#0B57D0';
+    select.style.color = 'white';
+    select.style.fontSize = '14px';
+    select.style.height = '36px';
+    select.style.cursor = 'pointer';
 
-    button.textContent = CONFIG.BUTTON_TEXT.DEFAULT;
-    return button;
-  }
+    const tones = [
+        { value: 'professional', text: 'Profissional' },
+        { value: 'friendly', text: 'Amigável' },
+        { value: 'urgent', text: 'Urgente' },
+        { value: 'casual', text: 'Casual' }
+    ];
 
-  static createToneSelector() {
-    const select = DOMUtils.createElement('select', {
-      'class': 'tone-selector',
-      'aria-label': 'Selecionar tom da resposta'
-    }, CONFIG.STYLES.SELECT);
-
-    CONFIG.TONES.forEach(tone => {
-      const option = DOMUtils.createElement('option', { value: tone.value });
-      option.textContent = tone.label;
-      select.appendChild(option);
+    tones.forEach(tone => {
+        const option = document.createElement('option');
+        option.value = tone.value;
+        option.textContent = tone.text;
+        select.appendChild(option);
     });
 
     return select;
-  }
 }
 
-class InstantMailExtension {
-  constructor() {
-    this.observer = null;
-    this.initialized = false;
-    this.init();
-  }
+function getEmailContent() {
+    // Primeiro tentamos encontrar o e-mail aberto (para respostas)
+    const emailSelectors = [
+        '.ii.gt', // Conteúdo principal do e-mail
+        '.a3s.aiL', // Conteúdo HTML do e-mail
+        '[role="presentation"]', // Área de apresentação
+        '.gs', // Área geral do e-mail
+        '.adn.ads', // Div de conteúdo alternativo
+        '.msg-8223721542020609', // ID específico de algumas versões
+        '.email_body', // Corpo do e-mail
+        '.e4XSEd', // Novo seletor do Gmail
+        '.ii.gt.adO.aj8', // E-mail com anexos
+        '.gmail_quote' // Citações em respostas
+    ];
 
-  init() {
-    if (this.initialized) return;
-    this.initialized = true;
-
-    console.log('InstantMail - Extensão inicializada');
-    this.setupMutationObserver();
-    this.injectStyles();
-  }
-
-  injectStyles() {
-    const style = DOMUtils.createElement('style');
-    style.textContent = `
-      .ai-reply-button:hover {
-        background-color: #1b6de0 !important;
-        box-shadow: 0 1px 2px 0 rgba(26,115,232,0.45);
-      }
-      .tone-selector:hover {
-        background-color: #1b6de0 !important;
-      }
-      .tone-selector:focus {
-        outline: 2px solid #8ab4f8;
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  setupMutationObserver() {
-    this.observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        const hasComposeElements = Array.from(mutation.addedNodes).some(node =>
-          node.nodeType === Node.ELEMENT_NODE &&
-          (node.matches('.aDh, .btC, [role="dialog"]') ||
-           node.querySelector('.aDh, .btC, [role="dialog"]'))
-        );
-
-        if (hasComposeElements) {
-          this.debouncedInjectButton();
+    // Tentamos primeiro os seletores mais específicos
+    for (const selector of emailSelectors) {
+        const element = document.querySelector(selector);
+        if (element && element.innerText && element.innerText.trim().length > 50) {
+            return element.innerText.trim();
         }
-      });
+    }
+
+    // Se não encontrou, tentamos uma abordagem mais ampla
+    const emailContainers = [
+        document.querySelector('.nH.if'), // Container principal do e-mail
+        document.querySelector('.a3s') // Área de conteúdo
+    ];
+
+    for (const container of emailContainers) {
+        if (container) {
+            // Pega todo o texto, mas remove cabeçalhos e rodapés
+            let text = container.innerText;
+
+            // Remove assinaturas e citações
+            text = text.replace(/--\s*[\s\S]*$/gm, '');
+            text = text.replace(/On\s.*wrote:[\s\S]*$/gm, '');
+            text = text.replace(/Em\s.*escreveu:[\s\S]*$/gm, '');
+
+            if (text.trim().length > 50) {
+                return text.trim();
+            }
+        }
+    }
+
+    // Último recurso: pega todo o texto da janela, mas filtra
+    const allText = document.body.innerText;
+    const lines = allText.split('\n')
+        .filter(line => line.trim().length > 0)
+        .filter(line => !line.includes('Forwarded message'))
+        .filter(line => !line.includes('Mensagem encaminhada'))
+        .filter(line => !line.includes('---------- Forwarded message ---------'))
+        .filter(line => !line.match(/^On\s.+\s<\w+@\w+\.\w+>\s+wrote:$/))
+        .filter(line => !line.match(/^De:\s.+/))
+        .filter(line => !line.match(/^Para:\s.+/))
+        .filter(line => !line.match(/^Data:\s.+/))
+        .filter(line => !line.match(/^Assunto:\s.+/));
+
+    const filteredText = lines.join('\n').trim();
+    return filteredText.length > 50 ? filteredText : '';
+}
+function debugEmailContent() {
+    console.log("=== DEBUG DE ELEMENTOS DE E-MAIL ===");
+
+    // Lista todos os elementos com texto relevante
+    document.querySelectorAll('*').forEach(el => {
+        if (el.innerText && el.innerText.trim().length > 20 &&
+            !el.innerText.includes('http') &&
+            !el.tagName.match(/SCRIPT|STYLE|LINK|META/)) {
+            console.log(`Tag: ${el.tagName}, Classes: ${el.className}, Text: ${el.innerText.substring(0, 50)}...`);
+        }
     });
 
-    this.observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
-  }
+    // Chame esta função manualmente no console quando precisar debuggar
+}
+function findComposeToolbar() {
+    const selectors = [
+        '.gU.Up', // Priorizando seletores mais específicos primeiro
+        '.btC',
+        '.aDh',
+        '[role="toolbar"]',
+        '.G3.G2', // Novo seletor para barra de ferramentas
+        '.J-J5-Ji' // Outro seletor comum
+    ];
 
-  debouncedInjectButton = this.debounce(() => this.injectButton(), 500);
+    for (const selector of selectors) {
+        const toolbar = document.querySelector(selector);
+        if (toolbar) {
+            return toolbar;
+        }
+    }
+    return null;
+}
 
-  debounce(func, wait) {
-    let timeout;
-    return function() {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, arguments), wait);
-    };
-  }
+async function generateAIResponse(emailContent, tone) {
+    try {
+        const response = await fetch('https://instantmail.shop/api/email/generate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                emailContent: emailContent,
+                tone: tone
+            })
+        });
 
-  async injectButton() {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.text();
+    } catch (error) {
+        console.error('Erro na requisição:', error);
+        throw error;
+    }
+}
+
+function insertTextIntoComposeBox(text) {
+    const composeBox = document.querySelector('[role="textbox"][g_editable="true"], .editable.LW-avf');
+
+    if (composeBox) {
+        composeBox.focus();
+        document.execCommand('selectAll', false, null);
+        document.execCommand('delete', false, null);
+        document.execCommand('insertText', false, text);
+        return true;
+    }
+
+    console.error('Caixa de composição não encontrada');
+    return false;
+}
+
+function injectButton() {
+    // Remove botões existentes
     document.querySelectorAll('.ai-reply-button, .tone-selector').forEach(el => el.remove());
 
-    const toolbar = DOMUtils.findFirstElement(CONFIG.SELECTORS.COMPOSE_TOOLBAR);
-    if (!toolbar) return;
-
-    const button = AIComponents.createAIButton();
-    const toneSelector = AIComponents.createToneSelector();
-
-    toolbar.insertBefore(toneSelector, toolbar.firstChild);
-    toolbar.insertBefore(button, toolbar.firstChild);
-
-    button.addEventListener('click', () => this.handleButtonClick(button, toneSelector));
-  }
-
-  async handleButtonClick(button, toneSelector) {
-    try {
-      this.updateButtonState(button, 'loading');
-
-      const emailContent = this.getEmailContent();
-      const selectedTone = toneSelector.value;
-
-      const response = await this.generateAIResponse(emailContent, selectedTone);
-      this.insertResponseIntoComposeBox(response);
-
-      this.updateButtonState(button, 'success');
-    } catch (error) {
-      console.error('Erro ao gerar resposta:', error);
-      this.updateButtonState(button, 'error');
-      this.showErrorNotification(error.message || 'Falha ao gerar resposta');
+    const toolbar = findComposeToolbar();
+    if (!toolbar) {
+        console.log("Toolbar não encontrada - tentando novamente em 500ms");
+        setTimeout(injectButton, 500);
+        return;
     }
-  }
 
-  updateButtonState(button, state) {
-    switch (state) {
-      case 'loading':
-        button.textContent = CONFIG.BUTTON_TEXT.LOADING;
-        button.disabled = true;
-        break;
-      case 'error':
-        button.textContent = CONFIG.BUTTON_TEXT.ERROR;
-        button.disabled = false;
-        break;
-      case 'success':
-        default:
-          button.textContent = CONFIG.BUTTON_TEXT.DEFAULT;
-          button.disabled = false;
-    }
-  }
+    console.log("Toolbar encontrada, criando botão de IA");
+    const button = createAIButton();
+    const toneSelector = createToneSelector();
 
-  getEmailContent() {
-    const content = DOMUtils.findFirstElement(CONFIG.SELECTORS.EMAIL_CONTENT);
-    return content ? content.innerText.trim() : '';
-  }
-
-  async generateAIResponse(emailContent, tone) {
-    try {
-      const response = await fetch(CONFIG.API_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Extension-Version': chrome.runtime.getManifest().version
-        },
-        body: JSON.stringify({
-          emailContent: emailContent,
-          tone: tone
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Erro na API: ${response.status} ${response.statusText}`);
-      }
-
-      return await response.text();
-    } catch (error) {
-      console.error('Erro na requisição:', error);
-      throw new Error('Não foi possível conectar ao servidor');
-    }
-  }
-
-  insertResponseIntoComposeBox(text) {
-    const composeBox = document.querySelector(CONFIG.SELECTORS.COMPOSE_BOX);
-    if (composeBox) {
-      composeBox.focus();
-      document.execCommand('insertText', false, text);
+    // Verifica a direção da toolbar para inserção correta
+    if (toolbar.firstChild) {
+        toolbar.insertBefore(toneSelector, toolbar.firstChild);
+        toolbar.insertBefore(button, toneSelector.nextSibling);
     } else {
-      throw new Error('Caixa de composição não encontrada');
+        toolbar.appendChild(toneSelector);
+        toolbar.appendChild(button);
     }
-  }
 
-  showErrorNotification(message) {
-    const notification = DOMUtils.createElement('div', {
-      'class': 'instantmail-notification',
-      'role': 'alert'
-    }, {
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      backgroundColor: '#f44336',
-      color: 'white',
-      padding: '15px',
-      borderRadius: '4px',
-      zIndex: '9999'
-    });
+   button.addEventListener('click', async () => {
+       try {
+           button.innerHTML = '<span>Gerando...</span>';
+           button.style.opacity = '0.7';
+           button.disabled = true;
 
-    notification.textContent = message;
-    document.body.appendChild(notification);
+           const emailContent = getEmailContent();
 
-    setTimeout(() => notification.remove(), 5000);
-  }
+           if (!emailContent || emailContent.length < 10) {
+               // Mostra o que foi capturado para debug
+               console.log("Conteúdo capturado:", emailContent);
+               console.log("Elementos encontrados:", document.querySelectorAll('*'));
+
+               throw new Error(`Não foi possível obter o conteúdo do e-mail. Por favor, certifique-se que você está visualizando um e-mail aberto ou tentando responder a uma mensagem.`);
+           }
+
+           const selectedTone = toneSelector.value;
+           const generatedReply = await generateAIResponse(emailContent, selectedTone);
+
+           if (!insertTextIntoComposeBox(generatedReply)) {
+               throw new Error('Não foi possível inserir o texto na caixa de composição. Por favor, certifique-se que a janela de composição está aberta.');
+           }
+       } catch (error) {
+           console.error('Erro:', error);
+
+           // Mensagem mais amigável para o usuário
+           if (error.message.includes('conteúdo do e-mail')) {
+               alert('Não conseguimos ler o e-mail. Por favor:\n1. Abra o e-mail que deseja responder\n2. Clique no botão de resposta\n3. Tente novamente');
+           } else {
+               alert('Erro: ' + error.message);
+           }
+       } finally {
+           button.innerHTML = '<span>Resposta de IA</span>';
+           button.style.opacity = '1';
+           button.disabled = false;
+       }
+   });
 }
 
-new InstantMailExtension();
+// Observador de mutação melhorado
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (!mutation.addedNodes.length) return;
+
+        mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                // Verifica se é a janela de composição ou contém a toolbar
+                if (node.matches('[role="dialog"], .nH, .no, .nn') ||
+                    node.querySelector('[role="dialog"], .btC, .aDh, [role="toolbar"]')) {
+                    console.log("Elemento de composição detectado");
+                    setTimeout(injectButton, 300);
+                }
+            }
+        });
+    });
+});
+
+// Configuração do observador
+observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: false,
+    characterData: false
+});
+
+// Injeção inicial (caso a janela já esteja aberta)
+setTimeout(injectButton, 1000);
