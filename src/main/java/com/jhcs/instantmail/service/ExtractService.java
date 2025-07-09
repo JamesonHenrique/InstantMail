@@ -10,24 +10,32 @@ import java.util.regex.Pattern;
 @Service
 @AllArgsConstructor
 public class ExtractService {
+    private static final Pattern RECIPIENT_PATTERN = Pattern.compile(
+            "(?i)(?:Oi|Olá|Prezado|Caro|Cara)[,\\s]+([A-ZÀ-Ú][a-zà-ú]+(?:\\s+[A-ZÀ-Ú][a-zà-ú]+)*)"
+    );
+
+    private static final Pattern SENDER_PATTERN = Pattern.compile(
+            "(?i)(?:Abraços|Atenciosamente|Obrigado|Saudações|Cordialmente)[,\\s]*\\n?\\s*([A-ZÀ-Ú][a-zà-ú]+(?:\\s+[A-ZÀ-Ú][a-zà-ú]+)*)\\s*$"
+    );
 
     public EmailParticipants extractParticipants(String emailContent) {
-        String recipient = extractRecipient(emailContent);
+        if (emailContent == null || emailContent.isBlank()) {
+            return new EmailParticipants("Remetente", "Destinatário");
+        }
 
-        String sender = extractSender(emailContent);
-
-        return new EmailParticipants(sender, recipient);
+        return new EmailParticipants(
+                extractSender(emailContent),
+                extractRecipient(emailContent)
+        );
     }
 
     public String extractRecipient(String emailContent) {
-        Pattern pattern = Pattern.compile("(?i)(Oi|Olá|Oi,|Olá,)\\s+([A-Z][a-z]+(?:\\s+[A-Z][a-z]+)*)");
-        Matcher matcher = pattern.matcher(emailContent);
-        return matcher.find() ? matcher.group(2) : "Nome";
+        Matcher matcher = RECIPIENT_PATTERN.matcher(emailContent);
+        return matcher.find() ? matcher.group(1).trim() : "Destinatário";
     }
 
     public String extractSender(String emailContent) {
-        Pattern pattern = Pattern.compile("(?i)(Abraços|Atenciosamente|Obrigado),?\\s*\\n?\\s*([A-Z][a-z]+(?:\\s+[A-Z][a-z]+)*)\\s*$");
-        Matcher matcher = pattern.matcher(emailContent);
-        return matcher.find() ? matcher.group(2) : "Remetente";
+        Matcher matcher = SENDER_PATTERN.matcher(emailContent);
+        return matcher.find() ? matcher.group(1).trim() : "Remetente";
     }
 }

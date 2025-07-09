@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,8 +36,8 @@ public class EmailGeneratorService {
     }
 
     public String generateEmailReply(EmailRequest emailRequest) {
-        log.info("Generating email reply with tone: {}",
-                Optional.ofNullable(emailRequest.getTone()).orElse("default"));
+        log.info("Gerando resposta de e-mail com tom: {}",
+                Optional.ofNullable(emailRequest.getTone()).orElse("padrão"));
 
         validateRequest(emailRequest);
         String prompt = buildPrompt(emailRequest);
@@ -44,18 +45,18 @@ public class EmailGeneratorService {
 
         try {
             String response = callExternalApi(requestBody);
-            log.debug("Received response from Gemini API");
+            log.debug("Resposta recebida da API Gemini");
             return extractResponseContent(response);
         } catch (Exception e) {
-            log.error("Error generating email reply", e);
-            throw new RuntimeException("Failed to generate email reply", e);
+            log.error("Erro ao gerar resposta de e-mail", e);
+            throw new RuntimeException("Falha ao gerar resposta de e-mail", e);
         }
     }
 
     private void validateRequest(EmailRequest emailRequest) {
         if (emailRequest == null || emailRequest.getEmailContent() == null ||
                 emailRequest.getEmailContent().trim().isEmpty()) {
-            log.warn("Invalid email request received");
+            log.warn("Requisição de e-mail inválida recebida");
             throw new IllegalArgumentException("O conteúdo do e-mail não pode ser nulo ou vazio");
         }
     }
@@ -71,7 +72,7 @@ public class EmailGeneratorService {
     }
 
     private String callExternalApi(Map<String, Object> requestBody) {
-        log.debug("Calling Gemini API");
+        log.debug("Chamando API Gemini");
         return webClient.post()
                 .uri(geminiApiUrl + geminiApiKey)
                 .header("Content-Type", "application/json")
@@ -92,38 +93,62 @@ public class EmailGeneratorService {
                     .path("text")
                     .asText();
         } catch (Exception e) {
-            log.error("Error extracting content from API response", e);
-            throw new RuntimeException("Error processing API response", e);
+            log.error("Erro ao extrair conteúdo da resposta da API", e);
+            throw new RuntimeException("Erro ao processar resposta da API", e);
         }
     }
 
-
     private String buildPrompt(EmailRequest emailRequest) {
+        Objects.requireNonNull(emailRequest, "EmailRequest não pode ser nulo");
+
         EmailParticipants participants = extractService.extractParticipants(emailRequest.getEmailContent());
-        return "INSTRUÇÕES DETALHADAS PARA GERAÇÃO DE RESPOSTA DE E-MAIL:\n\n" +
-                "===== TAREFA PRINCIPAL =====\n" +
-                "Gere uma resposta profissional em português para o e-mail abaixo, seguindo RIGOROSAMENTE todas as instruções.\n\n" +
+        String senderName = extractFirstName(participants.getSender());
+        String recipientName = extractFirstName(participants.getRecipient());
+        String tone = Optional.ofNullable(emailRequest.getTone())
+                .filter(t -> !t.trim().isEmpty())
+                .orElse("profissional");
 
-                "===== INFORMAÇÕES DOS PARTICIPANTES =====\n" +
-                "- REMETENTE ORIGINAL (quem enviou este email): " + participants.getSender() + "\n" +
-                "- DESTINATÁRIO (quem recebeu/está respondendo): " + participants.getRecipient() + "\n\n" +
+        return """
+           INSTRUÇÕES DETALHADAS PARA GERAÇÃO DE RESPOSTA DE E-MAIL:
 
-                "===== CONTEÚDO =====\n" +
-                "- Saudação inicial deve ser direcionada ao remetente original: 'Olá " + participants.getSender().split(" ")[0] + ",'\n" +
-                "- A resposta deve abordar todos os pontos principais\n" +
-                "- Tom: " + Optional.ofNullable(emailRequest.getTone()).filter(t -> !t.trim().isEmpty()).orElse("profissional") + "\n\n" +
+           ===== TAREFA PRINCIPAL =====
+           Gere uma resposta profissional em português para o e-mail abaixo, seguindo RIGOROSAMENTE todas as instruções.
 
-                "===== FORMATAÇÃO OBRIGATÓRIA =====\n" +
-                "- Saudação: 'Olá " + participants.getSender().split(" ")[0] + ",'\n" +
-                "- Parágrafos curtos e bem estruturados\n" +
-                "- Quebras de linha adequadas\n\n" +
+           ===== INFORMAÇÕES DOS PARTICIPANTES =====
+           - REMETENTE ORIGINAL: %s
+           - DESTINATÁRIO: %s
+           - TOM SOLICITADO: %s
 
-                "===== ASSINATURA =====\n" +
-                "- Finalizar com:\n" +
-                "Abraços,\n" +
-                participants.getRecipient().split(" ")[0] + "\n\n" +
+           ===== DIRETRIZES DE RESPOSTA =====
+           1. SAUDAÇÃO: "Olá %s,"
+           2. CONTEÚDO:
+              - Aborde todos os pontos principais do e-mail original
+              - Utilize parágrafos curtos e objetivos
+              - Mantenha o tom %s
+           3. FORMATAÇÃO:
+              - Máximo 4-5 linhas por parágrafo
+              - Espaçamento entre parágrafos
+           4. ENCERRAMENTO:
+              "Abraços,
+              %s"
 
-                "===== E-MAIL ORIGINAL =====\n" +
-                emailRequest.getEmailContent();
+           ===== E-MAIL ORIGINAL PARA REFERÊNCIA =====
+           %s
+           """.formatted(
+                participants.getSender(),
+                participants.getRecipient(),
+                tone,
+                senderName,
+                tone,
+                recipientName,
+                emailRequest.getEmailContent()
+        );
+    }
+
+    private String extractFirstName(String fullName) {
+        if (fullName == null || fullName.trim().isEmpty()) {
+            return "Nome";
+        }
+        return fullName.split("\\s+")[0];
     }
 }
