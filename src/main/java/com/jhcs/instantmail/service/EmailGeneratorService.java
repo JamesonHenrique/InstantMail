@@ -6,13 +6,13 @@ import com.jhcs.instantmail.dto.EmailRequest;
 import com.jhcs.instantmail.utils.EmailParticipants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Slf4j
@@ -20,7 +20,7 @@ public class EmailGeneratorService {
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
-    private final ExtractService extractService;
+    private ExtractService extractService;
 
     @Value("${gemini.api.url}")
     private String geminiApiUrl;
@@ -31,10 +31,10 @@ public class EmailGeneratorService {
     public EmailGeneratorService(WebClient.Builder webClient, ObjectMapper objectMapper, ExtractService extractService) {
         this.webClient = webClient.build();
         this.objectMapper = objectMapper;
-        this.extractService = extractService;
+        this.extractService = new ExtractService();
     }
-    @Cacheable(value = "emailReplies", key = "#emailRequest.hashCode()")
-    public Mono<String> generateEmailReply(EmailRequest emailRequest) {
+
+    public String generateEmailReply(EmailRequest emailRequest) {
         log.info("Generating email reply with tone: {}",
                 Optional.ofNullable(emailRequest.getTone()).orElse("default"));
 
@@ -42,15 +42,14 @@ public class EmailGeneratorService {
         String prompt = buildPrompt(emailRequest);
         Map<String, Object> requestBody = createRequestBody(prompt);
 
-        return webClient.post()
-                .uri(geminiApiUrl + geminiApiKey)
-                .header("Content-Type", "application/json")
-                .bodyValue(requestBody)
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(this::extractResponseContent)
-                .doOnError(e -> log.error("Error generating email reply", e))
-                .onErrorMap(e -> new RuntimeException("Failed to generate email reply", e));
+        try {
+            String response = callExternalApi(requestBody);
+            log.debug("Received response from Gemini API");
+            return extractResponseContent(response);
+        } catch (Exception e) {
+            log.error("Error generating email reply", e);
+            throw new RuntimeException("Failed to generate email reply", e);
+        }
     }
 
     private void validateRequest(EmailRequest emailRequest) {
@@ -69,6 +68,17 @@ public class EmailGeneratorService {
                         })
                 }
         );
+    }
+
+    private String callExternalApi(Map<String, Object> requestBody) {
+        log.debug("Calling Gemini API");
+        return webClient.post()
+                .uri(geminiApiUrl + geminiApiKey)
+                .header("Content-Type", "application/json")
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
     }
 
     private String extractResponseContent(String response) {
