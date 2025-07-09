@@ -79,8 +79,10 @@
           </ng-template>
         </button>
       </form>
-
-      <div #resultArea *ngIf="showResult" class="mt-8">
+      <div *ngIf="errorMessage" class="text-red-500 mt-2 text-center">
+        {{ errorMessage }}
+      </div>
+      <div  #resultArea *ngIf="showResult" class="mt-8">
         <h3 class="text-lg font-medium text-gray-800 mb-3">Resposta Gerada</h3>
         <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
           <p class="text-gray-700 whitespace-pre-line">{{ generatedReply }}</p>

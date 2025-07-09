@@ -39,6 +39,7 @@ export class EmailGeneratorComponent {
     { value: 'casual', label: 'Casual' },
     { value: 'urgent', label: 'Urgente' },
   ];
+  errorMessage: string = '';
 
   constructor(private fb: FormBuilder, private emailGeneratorService: EmailGeneratorService) {
     this.emailForm = this.fb.group({
@@ -66,14 +67,14 @@ export class EmailGeneratorComponent {
     }
 
     this.isLoading = true;
-    this.error = '';
+
 
     const formData = this.emailForm.value;
 
     this.emailGeneratorService.generateEmail(formData.originalEmail, formData.tone, formData.signature)
       .pipe(
         catchError((error) => {
-          this.error = 'Falha ao gerar resposta. Tente novamente.';
+          this.errorMessage = 'Falha ao gerar resposta. Tente novamente.';
           console.error(error);
           return of(null);
         })
