@@ -20,7 +20,7 @@ public class EmailGeneratorService {
 
     private final WebClient webClient;
     private final ObjectMapper objectMapper;
-    private ExtractService extractService;
+    private final ExtractService extractService;
 
     @Value("${gemini.api.url}")
     private String geminiApiUrl;
@@ -31,7 +31,7 @@ public class EmailGeneratorService {
     public EmailGeneratorService(WebClient.Builder webClient, ObjectMapper objectMapper, ExtractService extractService) {
         this.webClient = webClient.build();
         this.objectMapper = objectMapper;
-        this.extractService = new ExtractService();
+        this.extractService = extractService;
     }
 
     public String generateEmailReply(EmailRequest emailRequest) {
