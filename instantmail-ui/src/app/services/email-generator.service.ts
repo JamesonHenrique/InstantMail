@@ -9,11 +9,10 @@ import { environment } from '../../environment/environment.dev';
 export class EmailGeneratorService {
 
   constructor(private http: HttpClient) { }
-  generateEmail(emailContent: string, tone: string, signature: string): Observable<string> {
+  generateEmail(emailContent: string, tone: string): Observable<string> {
     return this.http.post(environment.apiUrl + '/api/email/generate', {
       emailContent,
       tone,
-      signature
     }, { responseType: 'text' })
   }
 }

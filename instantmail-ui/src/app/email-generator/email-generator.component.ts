@@ -13,7 +13,6 @@ import { EmailGeneratorService } from '../services/email-generator.service';
 interface EmailForm {
   originalEmail: string;
   tone: string;
-  signature: string;
 }
 
 @Component({
@@ -45,7 +44,6 @@ export class EmailGeneratorComponent {
     this.emailForm = this.fb.group({
       originalEmail: ['', [Validators.required, Validators.minLength(5)]],
       tone: [''],
-      signature: [''],
     });
   }
 
@@ -71,7 +69,7 @@ export class EmailGeneratorComponent {
 
     const formData = this.emailForm.value;
 
-    this.emailGeneratorService.generateEmail(formData.originalEmail, formData.tone, formData.signature)
+    this.emailGeneratorService.generateEmail(formData.originalEmail, formData.tone)
       .pipe(
         catchError((error) => {
           this.errorMessage = 'Falha ao gerar resposta. Tente novamente.';
