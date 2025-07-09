@@ -51,21 +51,18 @@ function createToneSelector() {
 }
 
 function getEmailContent() {
-    // Primeiro tentamos encontrar o e-mail aberto (para respostas)
     const emailSelectors = [
-        '.ii.gt', // Conteúdo principal do e-mail
-        '.a3s.aiL', // Conteúdo HTML do e-mail
-        '[role="presentation"]', // Área de apresentação
-        '.gs', // Área geral do e-mail
-        '.adn.ads', // Div de conteúdo alternativo
-        '.msg-8223721542020609', // ID específico de algumas versões
-        '.email_body', // Corpo do e-mail
-        '.e4XSEd', // Novo seletor do Gmail
-        '.ii.gt.adO.aj8', // E-mail com anexos
-        '.gmail_quote' // Citações em respostas
+        '.ii.gt',
+        '.a3s.aiL',
+        '[role="presentation"]',
+        '.gs',
+        '.adn.ads',
+        '.msg-8223721542020609',
+        '.email_body',
+        '.e4XSEd',
+        '.ii.gt.adO.aj8',
+        '.gmail_quote'
     ];
-
-    // Tentamos primeiro os seletores mais específicos
     for (const selector of emailSelectors) {
         const element = document.querySelector(selector);
         if (element && element.innerText && element.innerText.trim().length > 50) {
@@ -73,18 +70,15 @@ function getEmailContent() {
         }
     }
 
-    // Se não encontrou, tentamos uma abordagem mais ampla
     const emailContainers = [
-        document.querySelector('.nH.if'), // Container principal do e-mail
-        document.querySelector('.a3s') // Área de conteúdo
+        document.querySelector('.nH.if'),
+        document.querySelector('.a3s')
     ];
 
     for (const container of emailContainers) {
         if (container) {
-            // Pega todo o texto, mas remove cabeçalhos e rodapés
             let text = container.innerText;
 
-            // Remove assinaturas e citações
             text = text.replace(/--\s*[\s\S]*$/gm, '');
             text = text.replace(/On\s.*wrote:[\s\S]*$/gm, '');
             text = text.replace(/Em\s.*escreveu:[\s\S]*$/gm, '');
@@ -95,7 +89,6 @@ function getEmailContent() {
         }
     }
 
-    // Último recurso: pega todo o texto da janela, mas filtra
     const allText = document.body.innerText;
     const lines = allText.split('\n')
         .filter(line => line.trim().length > 0)
@@ -114,7 +107,6 @@ function getEmailContent() {
 function debugEmailContent() {
     console.log("=== DEBUG DE ELEMENTOS DE E-MAIL ===");
 
-    // Lista todos os elementos com texto relevante
     document.querySelectorAll('*').forEach(el => {
         if (el.innerText && el.innerText.trim().length > 20 &&
             !el.innerText.includes('http') &&
@@ -123,16 +115,15 @@ function debugEmailContent() {
         }
     });
 
-    // Chame esta função manualmente no console quando precisar debuggar
 }
 function findComposeToolbar() {
     const selectors = [
-        '.gU.Up', // Priorizando seletores mais específicos primeiro
+        '.gU.Up',
         '.btC',
         '.aDh',
         '[role="toolbar"]',
-        '.G3.G2', // Novo seletor para barra de ferramentas
-        '.J-J5-Ji' // Outro seletor comum
+        '.G3.G2',
+        '.J-J5-Ji'
     ];
 
     for (const selector of selectors) {
@@ -184,7 +175,6 @@ function insertTextIntoComposeBox(text) {
 }
 
 function injectButton() {
-    // Remove botões existentes
     document.querySelectorAll('.ai-reply-button, .tone-selector').forEach(el => el.remove());
 
     const toolbar = findComposeToolbar();
@@ -198,7 +188,6 @@ function injectButton() {
     const button = createAIButton();
     const toneSelector = createToneSelector();
 
-    // Verifica a direção da toolbar para inserção correta
     if (toolbar.firstChild) {
         toolbar.insertBefore(toneSelector, toolbar.firstChild);
         toolbar.insertBefore(button, toneSelector.nextSibling);
@@ -216,7 +205,6 @@ function injectButton() {
            const emailContent = getEmailContent();
 
            if (!emailContent || emailContent.length < 10) {
-               // Mostra o que foi capturado para debug
                console.log("Conteúdo capturado:", emailContent);
                console.log("Elementos encontrados:", document.querySelectorAll('*'));
 
@@ -232,7 +220,6 @@ function injectButton() {
        } catch (error) {
            console.error('Erro:', error);
 
-           // Mensagem mais amigável para o usuário
            if (error.message.includes('conteúdo do e-mail')) {
                alert('Não conseguimos ler o e-mail. Por favor:\n1. Abra o e-mail que deseja responder\n2. Clique no botão de resposta\n3. Tente novamente');
            } else {
@@ -246,14 +233,12 @@ function injectButton() {
    });
 }
 
-// Observador de mutação melhorado
 const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (!mutation.addedNodes.length) return;
 
         mutation.addedNodes.forEach((node) => {
             if (node.nodeType === Node.ELEMENT_NODE) {
-                // Verifica se é a janela de composição ou contém a toolbar
                 if (node.matches('[role="dialog"], .nH, .no, .nn') ||
                     node.querySelector('[role="dialog"], .btC, .aDh, [role="toolbar"]')) {
                     console.log("Elemento de composição detectado");
@@ -264,7 +249,6 @@ const observer = new MutationObserver((mutations) => {
     });
 });
 
-// Configuração do observador
 observer.observe(document.body, {
     childList: true,
     subtree: true,
@@ -272,5 +256,4 @@ observer.observe(document.body, {
     characterData: false
 });
 
-// Injeção inicial (caso a janela já esteja aberta)
 setTimeout(injectButton, 1000);
