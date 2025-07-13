@@ -1,7 +1,7 @@
 # 🚀 **InstantMail - Sua IA para Respostas de E-mail Perfeitas**
 
 <div align="center">
-  <img src="instantmail-ui/public/favicon.ico" alt="InstantMail Banner" width="100%"/>
+  <img src="instantmail-ui/public/favicon.ico" alt="InstantMail Banner" width="40px"/>
 </div>
 
 **InstantMail** é sua assistente pessoal de e-mails, utilizando a poderosa **Gemini API** para criar respostas perfeitas em segundos. Adequado para qualquer contexto profissional ou pessoal.
