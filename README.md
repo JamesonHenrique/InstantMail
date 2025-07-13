@@ -4,7 +4,8 @@
   <img src="instantmail-ui/public/favicon.ico" alt="InstantMail Banner" width="40px"/>
 </div>
 
-**InstantMail** é sua assistente pessoal de e-mails, utilizando a poderosa **Gemini API** para criar respostas perfeitas em segundos. Adequado para qualquer contexto profissional ou pessoal.
+
+**InstantMail** é uma ferramenta  que utiliza inteligência artificial para ajudar você a redigir respostas de e-mail de forma rápida e eficiente. Com suporte a múltiplos tons de comunicação, o InstantMail se adapta ao seu estilo de escrita, seja profissional, casual ou amigável
 
 🌐 **Acesse agora:** [InstantMail Official](https://www.instantmail.shop/)
 
