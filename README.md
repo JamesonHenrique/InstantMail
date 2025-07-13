@@ -66,7 +66,7 @@ InstantMail/
 5. 🔄 Abra um Pull Request
 
 ## 📜 **Licença**
-[MIT License](LICENSE) © 2023 Jameson Henrique
+[MIT License](LICENSE) © 2025 Jameson Henrique
 
 ## 📩 **Contato**
 [![LinkedIn](https://img.shields.io/badge/Conecte_se-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/JamesonHenrique)  
