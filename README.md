@@ -8,13 +8,15 @@
 **InstantMail** é uma ferramenta  que utiliza inteligência artificial para ajudar você a redigir respostas de e-mail de forma rápida e eficiente. Com suporte a múltiplos tons de comunicação, o InstantMail se adapta ao seu estilo de escrita, seja profissional, casual ou amigável
 
 🌐 **Acesse agora:** [InstantMail Official](https://www.instantmail.shop/)
-
+<div align="center">
+  
 ## ✨ **Recursos Exclusivos**
 
 | 🔥 **Geração Instantânea** | 🎭 **Multi-Tons** | 🌈 **Integrações** |
 |---------------------------|------------------|-------------------|
 | Respostas em <5 segundos | Profissional/Casual/Amigável | Extensão Chrome (em breve) |
 
+</div>
 ## 🛠 **Tecnologias Principais**
 
 ```mermaid
