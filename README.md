@@ -100,7 +100,7 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## ✉️ Contato
 
 
-Linkedin: [https://www.linkedin.com/in/jamesonhenrique/](https://www.linkedin.com/in/jamesonhenrique/)
-
-Link do Projeto: [https://github.com/JamesonHenrique/InstantMail](https://github.com/JamesonHenrique/InstantMail)
+**Jameson Henrique**  
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin)](https://linkedin.com/in/JamesonHenrique)  
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail)](mailto:jamesonhenrique14@gmail.com)
 
