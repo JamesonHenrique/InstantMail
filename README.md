@@ -49,15 +49,6 @@ echo "GEMINI_API_KEY=sua_chave" > .env
 - Node.js 18+
 - [Conta Gemini API](https://ai.google.dev/)
 
-## 📊 **Estrutura do Projeto**
-```
-InstantMail/
-├── backend/         # Spring Boot Application
-├── instantmail-ui/  # Angular Frontend
-├── docs/            # Documentação
-└── scripts/         # Utilitários de deploy
-```
-
 ## 🤝 **Como Contribuir**
 1. � Fork o projeto
 2. 🌿 Crie sua branch (`git checkout -b feature/nova-feature`)
