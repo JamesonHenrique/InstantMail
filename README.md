@@ -75,4 +75,4 @@ InstantMail/
 <div align="center">
   <sub>Criado com ❤️ por Jameson Henrique | Atualizado em 2023</sub>
 </div>
-```
+
