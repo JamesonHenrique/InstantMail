@@ -14,7 +14,7 @@
 
 | 🔥 **Geração Instantânea** | 🎭 **Multi-Tons** | 🌈 **Integrações** |
 |---------------------------|------------------|-------------------|
-| Respostas em <15 segundos | Profissional/Casual/Amigável | Extensão Chrome (em breve) |
+| Respostas em <10 segundos | Profissional/Casual/Amigável | Extensão Chrome (em breve) |
 
 </div>
 
