@@ -24,8 +24,6 @@
 graph TD
     A[Frontend: Angular 17] --> B[Backend: Spring Boot]
     B --> C[IA: Gemini API]
-    C --> D[(Database)]
-    D --> E[Cloud Deployment]
 ```
 
 ## 🚀 **Comece Agora**
