@@ -30,7 +30,7 @@ graph TD
 
 ### 🌐 **Versão Online (Recomendada)**
 Acesse instantamente:  
-[![Website](https://img.shields.io/badge/Acessar-InstantMail-6a0dad?style=for-the-badge)](https://www.instantmail.shop/)
+[![Website](https://img.shields.io/badge/Acessar-InstantMail-2463EA?style=for-the-badge)](https://www.instantmail.shop/)
 
 ### 💻 **Execução Local**
 ```bash
