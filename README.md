@@ -17,6 +17,7 @@
 | Respostas em <5 segundos | Profissional/Casual/Amigável | Extensão Chrome (em breve) |
 
 </div>
+
 ## 🛠 **Tecnologias Principais**
 
 ```mermaid
