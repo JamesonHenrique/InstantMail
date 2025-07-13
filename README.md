@@ -8,7 +8,7 @@
 
 - Geração automática de respostas de e-mail
 - Suporte a diferentes tons de comunicação (profissional, amigável, etc.)
-- - Interface web responsiva
+- Interface web responsiva
 - Fácil de usar e configurar
 - Integração com Gmail através de extensão para Chrome (em desenvolvimento)
 
