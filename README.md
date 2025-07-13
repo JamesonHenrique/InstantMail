@@ -1,6 +1,6 @@
 # InstantMail
 
-**InstantMail** é uma ferramenta poderosa que utiliza inteligência artificial para ajudar você a redigir respostas de e-mail de forma rápida e eficiente. Com suporte a múltiplos tons de comunicação, o InstantMail se adapta ao seu estilo de escrita, seja profissional, casual ou amigável.
+**InstantMail** é uma ferramenta  que utiliza inteligência artificial para ajudar você a redigir respostas de e-mail de forma rápida e eficiente. Com suporte a múltiplos tons de comunicação, o InstantMail se adapta ao seu estilo de escrita, seja profissional, casual ou amigável.
 
 🌐 **Acesse agora:** [https://www.instantmail.shop/](https://www.instantmail.shop/)
 
@@ -8,17 +8,16 @@
 
 - Geração automática de respostas de e-mail
 - Suporte a diferentes tons de comunicação (profissional, amigável, etc.)
-- Integração com Gmail através de extensão para Chrome (em desenvolvimento)
-- Interface web responsiva
+- - Interface web responsiva
 - Fácil de usar e configurar
-- Disponível online em [instantmail.shop](https://www.instantmail.shop/)
+- Integração com Gmail através de extensão para Chrome (em desenvolvimento)
 
 ## 🛠️ Tecnologias
 
-- **Backend**: Java 17, Spring Boot 3.4.3
+- **Backend**: Java , Spring Boot
 - **Frontend**: Angular (versão compatível com Angular 17+)
 - **Ferramentas de Build**: Maven
-- **Integração com IA**: Gemini API (anteriormente conhecida como Bard)
+- **Integração com IA**: Gemini API
 
 ## 🌐 Usando o InstantMail
 
@@ -83,23 +82,6 @@ ng serve
 
 Acesse a aplicação em `http://localhost:4200`
 
-## 🌐 Extensão para Chrome (em desenvolvimento)
-
-Em breve, o InstantMail estará disponível como uma extensão para Chrome, permitindo que você gere respostas diretamente do Gmail.
-
-## 📝 Como usar
-
-1. **Versão Online**:
-   - Acesse [https://www.instantmail.shop/](https://www.instantmail.shop/)
-   - Cole o conteúdo do e-mail que deseja responder
-   - Selecione o tom desejado
-   - Clique em "Gerar Resposta"
-   - Copie a resposta gerada e use onde precisar
-
-2. **Versão Local**:
-   - Acesse `http://localhost:4200` após iniciar os serviços
-   - Siga os mesmos passos da versão online
-
 ## 🤝 Como contribuir
 
 Contribuições são bem-vindas! Siga estes passos:
@@ -116,6 +98,7 @@ Contribuições são bem-vindas! Siga estes passos:
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## ✉️ Contato
+
 
 Linkedin: [https://www.linkedin.com/in/jamesonhenrique/](https://www.linkedin.com/in/jamesonhenrique/)
 
