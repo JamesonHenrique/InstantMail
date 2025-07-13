@@ -1,106 +1,76 @@
-# InstantMail
+# 🚀 **InstantMail - Sua IA para Respostas de E-mail Perfeitas**
 
-**InstantMail** é uma ferramenta  que utiliza inteligência artificial para ajudar você a redigir respostas de e-mail de forma rápida e eficiente. Com suporte a múltiplos tons de comunicação, o InstantMail se adapta ao seu estilo de escrita, seja profissional, casual ou amigável.
+<div align="center">
+  <img src="https://via.placeholder.com/800x300/6a0dad/ffffff?text=InstantMail+AI" alt="InstantMail Banner" width="100%"/>
+</div>
 
-🌐 **Acesse agora:** [https://www.instantmail.shop/](https://www.instantmail.shop/)
+**InstantMail** é sua assistente pessoal de e-mails, utilizando a poderosa **Gemini API** para criar respostas perfeitas em segundos. Adequado para qualquer contexto profissional ou pessoal.
 
-## 🚀 Recursos
+🌐 **Acesse agora:** [InstantMail Official](https://www.instantmail.shop/)
 
-- Geração automática de respostas de e-mail
-- Suporte a diferentes tons de comunicação (profissional, amigável, etc.)
-- Interface web responsiva
-- Fácil de usar e configurar
-- Integração com Gmail através de extensão para Chrome (em desenvolvimento)
+## ✨ **Recursos Exclusivos**
 
-## 🛠️ Tecnologias
+| 🔥 **Geração Instantânea** | 🎭 **Multi-Tons** | 🌈 **Integrações** |
+|---------------------------|------------------|-------------------|
+| Respostas em <5 segundos | Profissional/Casual/Amigável | Extensão Chrome (em breve) |
 
-- **Backend**: Java , Spring Boot
-- **Frontend**: Angular (versão compatível com Angular 17+)
-- **Ferramentas de Build**: Maven
-- **Integração com IA**: Gemini API
+## 🛠 **Tecnologias Principais**
 
-## 🌐 Usando o InstantMail
+```mermaid
+graph TD
+    A[Frontend: Angular 17] --> B[Backend: Spring Boot]
+    B --> C[IA: Gemini API]
+    C --> D[(Database)]
+    D --> E[Cloud Deployment]
+```
 
-Você pode usar o InstantMail de duas maneiras:
+## 🚀 **Comece Agora**
 
-1. **Versão Online (Recomendado)**:
-   - Acesse [https://www.instantmail.shop/](https://www.instantmail.shop/)
-   - Comece a usar imediatamente sem necessidade de instalação
+### 🌐 **Versão Online (Recomendada)**
+Acesse instantamente:  
+[![Website](https://img.shields.io/badge/Acessar-InstantMail-6a0dad?style=for-the-badge)](https://www.instantmail.shop/)
 
-2. **Versão Local**:
-   Siga as instruções abaixo para executar o projeto localmente
-
-## 📦 Pré-requisitos (Apenas para execução local)
-
-- Java 17 ou superior
-- Node.js 18+ e npm 9+
-- Maven 3.9+
-- Conta na Google Cloud com acesso à API do Gemini
-
-## 🚀 Como executar localmente
-
-### 1. Clonar o repositório
-
+### 💻 **Execução Local**
 ```bash
+# 1. Clone o repositório
 git clone https://github.com/JamesonHenrique/InstantMail.git
-cd InstantMail
+
+# 2. Configure o .env
+echo "GEMINI_API_KEY=sua_chave" > .env
+
+# 3. Inicie os serviços
+./mvnw spring-boot:run & cd instantmail-ui && ng serve
 ```
 
-### 2. Configurar as variáveis de ambiente
+📌 **Pré-requisitos:**
+- Java 17+
+- Node.js 18+
+- [Conta Gemini API](https://ai.google.dev/)
 
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
-
-```env
-GEMINI_API_KEY=sua_chave_da_api_gemini
-GEMINI_API_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=
+## 📊 **Estrutura do Projeto**
+```
+InstantMail/
+├── backend/         # Spring Boot Application
+├── instantmail-ui/  # Angular Frontend
+├── docs/            # Documentação
+└── scripts/         # Utilitários de deploy
 ```
 
-### 3. Iniciar o backend
+## 🤝 **Como Contribuir**
+1. � Fork o projeto
+2. 🌿 Crie sua branch (`git checkout -b feature/nova-feature`)
+3. 💾 Commit suas mudanças (`git commit -m 'Add nova feature'`)
+4. 🚀 Push para a branch (`git push origin feature/nova-feature`)
+5. 🔄 Abra um Pull Request
 
-```bash
-# Navegue até a pasta do projeto
-cd InstantMail
+## 📜 **Licença**
+[MIT License](LICENSE) © 2023 Jameson Henrique
 
-# Compilar e executar o projeto Spring Boot
-./mvnw spring-boot:run
+## 📩 **Contato**
+[![LinkedIn](https://img.shields.io/badge/Conecte_se-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/JamesonHenrique)  
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail)](mailto:jamesonhenrique14@gmail.com)
+
+<div align="center">
+  <sub>Criado com ❤️ por Jameson Henrique | Atualizado em 2023</sub>
+</div>
 ```
-
-O servidor estará disponível em `http://localhost:8080`
-
-### 4. Iniciar o frontend
-
-```bash
-# Navegue até a pasta do frontend
-cd instantmail-ui
-
-# Instalar as dependências
-npm install
-
-# Iniciar o servidor de desenvolvimento
-ng serve
-```
-
-Acesse a aplicação em `http://localhost:4200`
-
-## 🤝 Como contribuir
-
-Contribuições são bem-vindas! Siga estes passos:
-
-1. Faça um Fork do projeto
-2. Crie uma Branch para sua Feature (`git checkout -b feature/AmazingFeature`)
-3. Adicione suas alterações (`git add .`)
-4. Comite suas alterações (`git commit -m 'Adiciona alguma feature incrível'`)
-5. Faça o Push da Branch (`git push origin feature/AmazingFeature`)
-6. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-## ✉️ Contato
-
-
-**Jameson Henrique**  
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat&logo=linkedin)](https://linkedin.com/in/JamesonHenrique)  
-[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail)](mailto:jamesonhenrique14@gmail.com)
-
