@@ -63,7 +63,4 @@ echo "GEMINI_API_KEY=sua_chave" > .env
 [![LinkedIn](https://img.shields.io/badge/Conecte_se-0077B5?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/JamesonHenrique)  
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail)](mailto:jamesonhenrique14@gmail.com)
 
-<div align="center">
-  <sub>Criado com ❤️ por Jameson Henrique | Atualizado em 2023</sub>
-</div>
 
