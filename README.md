@@ -39,7 +39,8 @@ git clone https://github.com/JamesonHenrique/InstantMail.git
 
 # 2. Configure oapplication.properties
 "GEMINI_URL":"sua_url" # Ex: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=
-"GEMINI_KEY":"sua_chave" # Ex: X-nSaA847RR6k1_Ir48DyxkSAlhI9Jz4CyNPJYG 
+"GEMINI_KEY":"sua_chave" # Ex: X-nSaA847RR6k1_Ir48DyxkSAlhI9Jz4CyNPJYG
+
 # 3. Inicie os serviços
 ./mvnw spring-boot:run & cd instantmail-ui && ng serve
 ```
